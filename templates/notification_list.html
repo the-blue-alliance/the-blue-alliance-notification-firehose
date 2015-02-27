@@ -1,3 +1,11 @@
-{% for notification in notifications %}
-{{notification.created}}: {{notification.payload}}<br>
-{% endfor %}
+{% block main_javascript %}
+<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type='text/javascript' src='js/firebase_updates.js'></script>
+{% endblock %}
+
+<h1>All FRC Notifications</h1>
+
+<div id='notifications'>
+
+</div>
