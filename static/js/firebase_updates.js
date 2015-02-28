@@ -20,7 +20,7 @@ function updateNotifications(snapshot){
         var messageData = JSON.stringify(payload['message_data'], null, 2);
         var messageType = payload['message_type'];
 
-        strData = "<div><p>"+time+": "+messageType+"</p><pre>"+messageData+"</pre></div>";
+        strData = "<div class='well'><p>"+time+": "+messageType+"</p><pre>"+messageData+"</pre></div>";
         $('#notifications').prepend(strData);
     });
 }
