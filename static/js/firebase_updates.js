@@ -1,14 +1,10 @@
 var firebase = new Firebase('https://thebluealliance.firebaseio.com/notifications/');
 
-firebase.on('child_changed', function(snapshot) {
-    updateNotifications(snapshot);
-});
-
-firebase.on('child_added', function(snapshot) {
-    updateNotifications(snapshot);
-});
-
 firebase.on('value', function(snapshot) {
+    updateNotifications(snapshot);
+});
+
+firebase.on('child_added', function(snapshot, prevChild) {
     updateNotifications(snapshot);
 });
 
