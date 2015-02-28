@@ -8,7 +8,14 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
+- url: /material_test.html
+  static_files: static/material_test.html
+  upload: static/material_test.html
 - url: /js
+  static_dir: subtrees/material/dist/js
+- url: /css
+  static_dir: subtrees/material/dist/css
+- url: /javascript
   static_dir: static/js
 
 - url: .*

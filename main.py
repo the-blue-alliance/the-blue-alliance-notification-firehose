@@ -31,6 +31,15 @@ class MainHandler(webapp2.RequestHandler):
 
         template_values = {}
 
+        path = os.path.join(os.path.dirname(__file__), "templates/notification_list_material.html")
+        self.response.write(template.render(path, template_values))
+
+
+class SimpleHandler(webapp2.RequestHandler):
+    def get(self):
+
+        template_values = {}
+
         path = os.path.join(os.path.dirname(__file__), "templates/notification_list.html")
         self.response.write(template.render(path, template_values))
 
@@ -55,6 +64,7 @@ class IncomingHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/simple', SimpleHandler),
     ('/incoming', IncomingHandler),
     ('/webhooks', WebhookHandler),
 
