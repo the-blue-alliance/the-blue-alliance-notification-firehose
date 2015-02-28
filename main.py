@@ -35,6 +35,14 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(template.render(path, template_values))
 
 
+class WebhookHandler(webapp2.RequestHandler):
+    def get(self):
+        notifications = Notification.query().order(-Notification.created).fetch()
+        template_values = {'notifications': notifications}
+        path = os.path.join(os.path.dirname(__file__), "templates/notification_list_webhook.html")
+        self.response.write(template.render(path, template_values))
+
+
 class IncomingHandler(webapp2.RequestHandler):
     def post(self):
         checksum = self.request.headers['X-Tba-Checksum']
@@ -47,6 +55,7 @@ class IncomingHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/incoming', IncomingHandler)
+    ('/incoming', IncomingHandler),
+    ('/webhooks', WebhookHandler),
 
 ], debug=True)
