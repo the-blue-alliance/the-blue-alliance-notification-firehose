@@ -12,7 +12,7 @@ function updateNotifications(snapshot){
             return;
         }
         var timeString = data['time'];
-        var time = new Date(timeString+"+00:00");
+        var time = new Date(timeString+"+00:00").toLocaleString();
         var messageData = JSON.stringify(payload['message_data'], null, 2);
         var messageType = payload['message_type'];
 
