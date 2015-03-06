@@ -21,19 +21,19 @@ function updateNotifications(snapshot){
         var eventKey = 'XXXX????';
         switch(messageType) {
             case 'alliance_selection':
-                card.addClass('panel-primary');
+                card.addClass('panel-material-red');
                 eventKey = payload['message_data']['event_key'];
 
                 body.append($('<strong>', {text: 'Alliance Selection Results: TODO'}));
                 break;
             case 'awards_posted':
-                card.addClass('panel-primary');
+                card.addClass('panel-material-green');
                 eventKey = payload['message_data']['event_key'];
 
                 body.append($('<strong>', {text: 'Awards Posted'}));
                 break;
             case 'match_score':
-                card.addClass('panel-success');
+                card.addClass('panel-material-indigo');
                 eventKey = payload['message_data']['match']['event_key'];
 
                 body.append($('<strong>', {text: 'Match Score'}));
@@ -45,13 +45,13 @@ function updateNotifications(snapshot){
                 body.append($('<div>', {text: blueTeams.toString() + ' - ' + blueScore}));
                 break;
             case 'schedule_updated':
-                card.addClass('panel-info');
+                card.addClass('panel-material-light-blue');
                 eventKey = payload['message_data']['event_key'];
 
                 body.append($('<strong>').append($('<a>', {'href': 'http://www.thebluealliance.com/event/'+eventKey, 'target': '_blank', text: 'Schedule Updated'})));
                 break;
             case 'starting_comp_level':
-                card.addClass('panel-warning');
+                card.addClass('panel-material-purple');
                 eventKey = payload['message_data']['event_key'];
 
                 levels = {
@@ -64,7 +64,7 @@ function updateNotifications(snapshot){
                 body.append($('<strong>', {text: levels[payload['message_data']['comp_level']] + ' matches starting'}));
                 break;
             case 'upcoming_match':
-                card.addClass('panel-danger');
+                card.addClass('panel-material-orange');
                 eventKey = payload['message_data']['match_key'].split('_')[0];
 
                 body.append($('<strong>', {text: 'Upcoming Match'}));
