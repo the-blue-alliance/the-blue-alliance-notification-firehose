@@ -4,10 +4,6 @@ firebase.on('value', function(snapshot) {
     updateNotifications(snapshot);
 });
 
-firebase.on('child_added', function(snapshot, prevChild) {
-    updateNotifications(snapshot);
-});
-
 function updateNotifications(snapshot){
     snapshot.forEach(function(child){
         var data = child.val();
