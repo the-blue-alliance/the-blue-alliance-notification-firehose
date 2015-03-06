@@ -71,7 +71,7 @@ function buildNotificationCard(data){
             card.addClass('panel-material-indigo');
             eventKey = payload['message_data']['match']['event_key'];
 
-            body.append($('<strong>', {text: 'Match Score'}));
+            body.append($('<strong>', {text: 'Match Score: ' + payload['message_data']['match']['key']}));
             var redTeams = payload['message_data']['match']['alliances']['red']['teams'];
             var blueTeams = payload['message_data']['match']['alliances']['blue']['teams'];
             var redScore = payload['message_data']['match']['alliances']['red']['score'];
@@ -102,7 +102,7 @@ function buildNotificationCard(data){
             card.addClass('panel-material-orange');
             eventKey = payload['message_data']['match_key'].split('_')[0];
 
-            body.append($('<strong>', {text: 'Upcoming Match'}));
+            body.append($('<strong>', {text: 'Upcoming Match: ' + payload['message_data']['match_key']}));
 
             var redTeams = payload['message_data']['team_keys'].slice(0, 3);
             var blueTeams = payload['message_data']['team_keys'].slice(3, 6);
