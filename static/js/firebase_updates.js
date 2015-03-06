@@ -1,17 +1,43 @@
 var firebase = new Firebase('https://thebluealliance.firebaseio.com/notifications/');
-var pageSize = 15;
+var pageSize = 25;
 var earliestKey = null;
+var visibleTypes = {};  // default = visible
 
 $(window).load(function() {
     firebase.limitToLast(pageSize).on('child_added', function(childSnapshot) {
         var card = buildNotificationCard(childSnapshot.val());
         $('#notifications').prepend(card);
+        updateVisibility(card, card.attr('data-type'));
 
         if (earliestKey == null || childSnapshot.key() < earliestKey) {
             earliestKey = childSnapshot.key();
         }
     });
+
+
+    // Show/hide notification types based on checkboxes
+    $('input[type="checkbox"]').click(function(){
+        var type = $(this).attr("value");
+        if (type in visibleTypes) {
+            visibleTypes[type] = !visibleTypes[type];
+        } else {
+            visibleTypes[type] = false;
+        }
+
+        if (visibleTypes[type]) {
+            $('.' + $(this).attr("value")).slideDown()
+        } else {
+            $('.' + $(this).attr("value")).slideUp();
+        }
+    });
 });
+
+function updateVisibility(e, type) {
+    if (!(type in visibleTypes) || visibleTypes[type]) {
+        e.slideDown();
+    }
+
+}
 
 function loadMore() {
     if (earliestKey != null) {
@@ -28,7 +54,11 @@ function loadMore() {
             }
 
             cards.reverse();
-            $('#notifications').append(cards.slice(1));  // First element is repeated
+            for (idx in cards.slice(1)) {// First element is repeated
+                var card = cards[idx];
+                $('#notifications').append(card);
+                updateVisibility(card, card.attr('data-type'));
+            }
         });
     }
 }
@@ -51,7 +81,9 @@ function buildNotificationCard(data){
     var messageType = payload['message_type'];
 
     var card = $('<div>', {'class': 'panel'});
+    card.hide();  // default with cards hidden
     card.addClass(messageType);
+    card.attr('data-type', messageType);
     var body = $('<div>', {'class': 'panel-body'});
     var eventKey = 'XXXX????';
     switch(messageType) {
