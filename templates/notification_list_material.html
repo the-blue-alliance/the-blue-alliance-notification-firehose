@@ -16,6 +16,11 @@
         <script>
         $(document).ready(function() {
             $.material.init();
+
+            // Show/hide notification types based on checkboxes
+            $('input[type="checkbox"]').click(function(){
+                $('.' + $(this).attr("value")).slideToggle();
+            });
         });
         </script>
 
@@ -46,37 +51,37 @@
                 <div class="col-xs-12 col-md-3">
                     <div class="checkbox checkbox-material-orange">
                         <label>
-                            <input checked type="checkbox" value="">
+                            <input checked type="checkbox" value="upcoming_match">
                             Upcoming Matches
                         </label>
                     </div>
                     <div class="checkbox checkbox-material-indigo">
                         <label>
-                            <input checked type="checkbox" value="">
+                            <input checked type="checkbox" value="match_score">
                             Match Results
                         </label>
                     </div>
                     <div class="checkbox checkbox-material-light-blue">
                         <label>
-                            <input checked type="checkbox" value="">
+                            <input checked type="checkbox" value="schedule_updated">
                             Schedule Updated
                         </label>
                     </div>
                     <div class="checkbox checkbox-material-purple">
                         <label>
-                            <input checked type="checkbox" value="">
+                            <input checked type="checkbox" value="starting_comp_level">
                             Competition Level Starting
                         </label>
                     </div>
                     <div class="checkbox checkbox-material-red">
                         <label>
-                            <input checked type="checkbox" value="">
+                            <input checked type="checkbox" value="alliance_selection">
                             Alliance Selections
                         </label>
                     </div>
                     <div class="checkbox checkbox-material-green">
                         <label>
-                            <input checked type="checkbox" value="">
+                            <input checked type="checkbox" value="awards_posted">
                             Awards Posted
                         </label>
                     </div>

@@ -17,6 +17,7 @@ function updateNotifications(snapshot){
         var messageType = payload['message_type'];
 
         var card = $('<div>', {'class': 'panel'});
+        card.addClass(messageType);
         var body = $('<div>', {'class': 'panel-body'});
         var eventKey = 'XXXX????';
         switch(messageType) {
