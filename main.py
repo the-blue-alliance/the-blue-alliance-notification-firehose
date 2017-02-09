@@ -46,7 +46,7 @@ class SimpleHandler(webapp2.RequestHandler):
 
 class WebhookHandler(webapp2.RequestHandler):
     def get(self):
-        notifications = Notification.query().order(-Notification.created).fetch()
+        notifications = Notification.query().order(-Notification.created).fetch(100)
         template_values = {'notifications': notifications}
         path = os.path.join(os.path.dirname(__file__), "templates/notification_list_webhook.html")
         self.response.write(template.render(path, template_values))
