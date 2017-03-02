@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 import hashlib
+import json
 import logging
 import os
 import webapp2
@@ -47,9 +48,9 @@ class SimpleHandler(webapp2.RequestHandler):
 class WebhookHandler(webapp2.RequestHandler):
     def get(self):
         notifications = Notification.query().order(-Notification.created).fetch(100)
-        template_values = {'notifications': notifications}
-        path = os.path.join(os.path.dirname(__file__), "templates/notification_list_webhook.html")
-        self.response.write(template.render(path, template_values))
+        notifications = [{"created": str(n.created), "payload": json.loads(n.payload)} for n in notifications]
+        self.response.headers['content-type'] = 'application/json; charset="utf-8"'
+        self.response.write(json.dumps(notifications, indent=2, sort_keys=True))
 
 
 class IncomingHandler(webapp2.RequestHandler):
