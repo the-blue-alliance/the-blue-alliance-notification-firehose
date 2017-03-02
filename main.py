@@ -29,8 +29,10 @@ SECRET = 'REPLACE_WITH_SECRET'
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        notifications = Notification.query().order(-Notification.created).fetch(100)
+        notifications = [{"time": str(n.created), "payload": json.loads(n.payload)} for n in notifications]
 
-        template_values = {}
+        template_values = {'notifications_json': json.dumps(notifications)}
 
         path = os.path.join(os.path.dirname(__file__), "templates/notification_list_material.html")
         self.response.write(template.render(path, template_values))
@@ -48,7 +50,7 @@ class SimpleHandler(webapp2.RequestHandler):
 class WebhookHandler(webapp2.RequestHandler):
     def get(self):
         notifications = Notification.query().order(-Notification.created).fetch(100)
-        notifications = [{"created": str(n.created), "payload": json.loads(n.payload)} for n in notifications]
+        notifications = [{"time": str(n.created), "payload": json.loads(n.payload)} for n in notifications]
         self.response.headers['content-type'] = 'application/json; charset="utf-8"'
         self.response.write(json.dumps(notifications, indent=2, sort_keys=True))
 

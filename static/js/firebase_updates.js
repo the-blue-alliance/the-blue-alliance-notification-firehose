@@ -4,16 +4,23 @@ var earliestKey = null;
 var visibleTypes = {};  // default = visible
 
 $(window).load(function() {
-    firebase.limitToLast(pageSize).on('child_added', function(childSnapshot) {
-        var card = buildNotificationCard(childSnapshot.val());
+
+    const notifications = JSON.parse(document.getElementById('notifications_json').innerHTML);
+    notifications.forEach(function (notif) {
+        var card = buildNotificationCard(notif);
         $('#notifications').prepend(card);
         updateVisibility(card, card.attr('data-type'));
-
-        if (earliestKey == null || childSnapshot.key() < earliestKey) {
-            earliestKey = childSnapshot.key();
-        }
     });
 
+    // firebase.limitToLast(pageSize).on('child_added', function(childSnapshot) {
+    //     var card = buildNotificationCard(childSnapshot.val());
+    //     $('#notifications').prepend(card);
+    //     updateVisibility(card, card.attr('data-type'));
+
+    //     if (earliestKey == null || childSnapshot.key() < earliestKey) {
+    //         earliestKey = childSnapshot.key();
+    //     }
+    // });
 
     // Show/hide notification types based on checkboxes
     $('input[type="checkbox"]').click(function(){
@@ -39,36 +46,36 @@ function updateVisibility(e, type) {
 
 }
 
-function loadMore() {
-    if (earliestKey != null) {
-        firebase.orderByKey().endAt(earliestKey).limitToLast(pageSize).once('value', function(snapshot) {
-            var data = snapshot.val();
-            var cards = [];
-            for (childKey in data) {
-                var card = buildNotificationCard(data[childKey]);
-                cards.push(card);
+// function loadMore() {
+//     if (earliestKey != null) {
+//         firebase.orderByKey().endAt(earliestKey).limitToLast(pageSize).once('value', function(snapshot) {
+//             var data = snapshot.val();
+//             var cards = [];
+//             for (childKey in data) {
+//                 var card = buildNotificationCard(data[childKey]);
+//                 cards.push(card);
 
-                if (earliestKey == null || childKey < earliestKey) {
-                    earliestKey = childKey;
-                }
-            }
+//                 if (earliestKey == null || childKey < earliestKey) {
+//                     earliestKey = childKey;
+//                 }
+//             }
 
-            cards.reverse();
-            for (idx in cards.slice(1)) {// First element is repeated
-                var card = cards[idx];
-                $('#notifications').append(card);
-                updateVisibility(card, card.attr('data-type'));
-            }
-        });
-    }
-}
+//             cards.reverse();
+//             for (idx in cards.slice(1)) {// First element is repeated
+//                 var card = cards[idx];
+//                 $('#notifications').append(card);
+//                 updateVisibility(card, card.attr('data-type'));
+//             }
+//         });
+//     }
+// }
 
-// Load more notifications when scroll reaches the bottom
-$(window).scroll(function() {
-    if (window.scrollY == document.body.scrollHeight - window.innerHeight) {
-      loadMore();
-    }
-});
+// // Load more notifications when scroll reaches the bottom
+// $(window).scroll(function() {
+//     if (window.scrollY == document.body.scrollHeight - window.innerHeight) {
+//       loadMore();
+//     }
+// });
 
 function buildNotificationCard(data){
     var payload = data['payload'];
