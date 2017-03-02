@@ -8,7 +8,7 @@ $(window).load(function() {
     const notifications = JSON.parse(document.getElementById('notifications_json').innerHTML);
     notifications.forEach(function (notif) {
         var card = buildNotificationCard(notif);
-        $('#notifications').prepend(card);
+        $('#notifications').append(card);
         updateVisibility(card, card.attr('data-type'));
     });
 
