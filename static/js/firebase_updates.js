@@ -111,8 +111,8 @@ function buildNotificationCard(data){
             eventKey = payload['message_data']['match']['event_key'];
 
             body.append($('<strong>', {text: 'Match Score: ' + payload['message_data']['match']['key']}));
-            var redTeams = payload['message_data']['match']['alliances']['red']['teams'];
-            var blueTeams = payload['message_data']['match']['alliances']['blue']['teams'];
+            var redTeams = payload['message_data']['match']['alliances']['red']['team_keys'];
+            var blueTeams = payload['message_data']['match']['alliances']['blue']['team_keys'];
             var redScore = payload['message_data']['match']['alliances']['red']['score'];
             var blueScore = payload['message_data']['match']['alliances']['blue']['score'];
             body.append($('<div>', {text: redTeams.toString() + ' - ' + redScore}));
